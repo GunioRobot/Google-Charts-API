@@ -6,6 +6,8 @@ module CommonParams
     end
     # don't forget to add @colors = [] to your
     # initialize block when you include this
+    
+    #TODO: finish colors
   end
 
   module ChartTitle
