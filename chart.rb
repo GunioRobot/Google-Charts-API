@@ -49,8 +49,11 @@ private
   def encoded_data
     raise 'No data!' if @datasets.empty?
     e = encoding
+
+    separator = e == :text ? '|' : ','
+    
     str = "chd=#{e.to_s[0...1]}:"
-    str += @datasets.collect {|d| d.encoded_data encoding}.join '|'
+    str += @datasets.collect { |d| d.encoded_data e }.join separator
   end
 
   def size= new_size

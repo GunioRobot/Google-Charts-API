@@ -169,10 +169,26 @@ describe '#encoded_data' do
     chart.send(:encoded_data).should include 'chd=t:'
   end
 
-  it 'builds a string out of each dataset, seperated by pipes' do
-    chart = Chart.new
-    chart.datasets << Dataset.new(:data => [-1,2,300])
-    chart.datasets << Dataset.new(:data => [4,-5,60.2])
-    chart.send(:encoded_data).should include "-1,2,300|4,-5,60.2"
+  describe 'Multiple datasets' do
+    it 'seperates multiple extended-encoded datasets by commas' do
+      chart = Chart.new
+      chart.datasets << Dataset.new(:data => [100,200,300])
+      chart.datasets << Dataset.new(:data => [400,500,600])
+      chart.send(:encoded_data).should == "chd=e:BkDIEs,GQH0JY"
+    end
+
+    it 'seperates multiple simple-encoded datasets by commas' do
+      chart = Chart.new
+      chart.datasets << Dataset.new(:data => [1,2,3])
+      chart.datasets << Dataset.new(:data => [4,5,6])
+      chart.send(:encoded_data).should == "chd=s:BCD,EFG"
+    end
+
+    it 'seperates multiple text-encoded datasets by pipes' do
+      chart = Chart.new
+      chart.datasets << Dataset.new(:data => [-1,2,300])
+      chart.datasets << Dataset.new(:data => [4,-5,60.2])
+      chart.send(:encoded_data).should == "chd=t:-1,2,300|4,-5,60.2"
+    end
   end
 end
