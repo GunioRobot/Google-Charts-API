@@ -14,6 +14,7 @@ Are what I need, so that's getting implemented first.
 `lc = LineChart.new :title => 'Foo', :size => '600x300'
 lc.datasets << Dataset.new(:data => [1,2,3,4,5])
 lc.url # => http://chart.apis.google.com/chart?chd=s:BCDEF&chs=600x300&chtt=Foo&cht=lc`
+
 Spiffiness
 ----------
 

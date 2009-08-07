@@ -1,9 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Dataset do
-  it 'accepts an optional title' do
-    d = Dataset.new :data => [0], :title => 'Foo'
-    d.title.should == 'Foo'
+  it 'accepts an optional name' do
+    d = Dataset.new :data => [0], :name => 'Foo'
+    d.name.should == 'Foo'
   end
 end
 

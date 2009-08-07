@@ -1,18 +1,23 @@
 module CommonParams
 
   module ChartColors
-    def self.included(base);
-      base.send :attr_accessor, :colors
+    def self.included base
+      base.send :attr_writer, :colors
+      base.parameters += [:colors]
     end
     # don't forget to add @colors = [] to your
     # initialize block when you include this
-    
+
     #TODO: finish colors
+    def colors
+      "chco=#{@datasets.collect(&:color).join(',')}" unless @datasets.empty?
+    end
   end
 
   module ChartTitle
-    def self.included(base)
+    def self.included base
       base.send :attr_writer, :title
+      base.parameters += [:title]
     end
 
     def title

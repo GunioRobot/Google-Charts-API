@@ -45,9 +45,9 @@ describe '#url' do
     lc = LineChart.new :size => '600x300'
     lc.datasets << Dataset.new(:data => [10, 20, 30])
 
-    Chart::PARAMETERS.each do |param|
+    LineChart.parameters.each do |param|
       value = lc.send(param)
-      lc.url.should include value unless value.nil?
+      lc.url.should include value unless value.blank?
     end
   end
 end
