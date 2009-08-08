@@ -33,7 +33,20 @@ class Chart
     @size.blank? ? raise('Size not set!') : "chs=#{@size}"
   end
 
-  def type; raise 'Override this method in your child class!' end
+  def type
+    raise 'Override this method in your child class!' if @type.blank?
+    "cht=#{@type}"
+  end
+
+  def gather sym, separator = ','
+    result = @datasets.collect(&(sym.to_sym)).compact
+    result.blank? ? nil : result.join(separator)
+  end
+
+  def param_string param, query_string, separator = ','
+    value = gather param, separator
+    "#{query_string}=#{value}" unless value.blank?
+  end
 
 protected
 
@@ -51,7 +64,7 @@ private
     e = encoding
 
     separator = e == :text ? '|' : ','
-    
+
     str = "chd=#{e.to_s[0...1]}:"
     str += @datasets.collect { |d| d.encoded_data e }.join separator
   end

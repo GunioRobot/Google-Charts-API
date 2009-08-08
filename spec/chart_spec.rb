@@ -192,3 +192,34 @@ describe '#encoded_data' do
     end
   end
 end
+
+describe '#gather' do
+  before :all do
+    @chart = Chart.new
+    @chart.datasets << Dataset.new(:data => [15,20,35], :color => :black)
+    @chart.datasets << Dataset.new(:data => [10,25,30], :color => :red)
+  end
+
+  it 'returns nil if there are no datasets' do
+    Chart.new.gather :color
+  end
+
+  it 'collects all of the specified info from the datasets' do
+    @chart.datasets.should_receive(:collect).and_return([])
+    @chart.gather :color
+  end
+
+  it 'calls the specified method on each dataset' do
+    d = @chart.datasets.first
+    d.should_receive :color
+    @chart.gather :color
+  end
+
+  it 'joins the results together with the specified separator' do
+    @chart.gather(:color, '\n').should == '000000\nFF0000'
+  end
+
+  it 'defaults to comma separated' do
+    @chart.gather(:color).should == '000000,FF0000'
+  end
+end
