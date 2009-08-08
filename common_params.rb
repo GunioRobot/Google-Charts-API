@@ -20,6 +20,16 @@ module CommonParams
     end
   end
 
+  module ChartShapeMarkers
+    def self.included base
+      base.parameters += [:shapes]
+    end
+
+    def shapes
+      
+    end
+  end
+
   module ChartTitle
     def self.included base
       base.send :attr_writer, :title
