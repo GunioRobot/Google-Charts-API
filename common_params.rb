@@ -2,15 +2,21 @@ module CommonParams
 
   module ChartColors
     def self.included base
-      base.send :attr_writer, :colors
       base.parameters += [:colors]
     end
-    # don't forget to add @colors = [] to your
-    # initialize block when you include this
 
-    #TODO: finish colors
     def colors
-      "chco=#{@datasets.collect(&:color).join(',')}" unless @datasets.empty?
+      param_string :color, 'chco'
+    end
+  end
+
+  module ChartLegend
+    def self.included base
+      base.parameters += [:legend]
+    end
+
+    def legend
+      param_string :name, 'chdl', '|'
     end
   end
 
@@ -21,8 +27,8 @@ module CommonParams
     end
 
     def title
-      "chtt=#{@title}" unless @title.nil?
+      "chtt=#{@title}" unless @title.blank?
     end
-
   end
+
 end
