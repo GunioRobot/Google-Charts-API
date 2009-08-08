@@ -54,3 +54,25 @@ describe '#encoded_data' do
     lambda { d.encoded_data :invalid_data_encoding }.should raise_error
   end
 end
+
+describe '#marker_string' do
+  before :all do
+    @dataset = Dataset.new(:data => [0])
+    @dataset.markers << ChartMarker.new
+    @dataset.markers << ChartMarker.new
+  end
+
+  it 'passes an index to the marker(s)' do
+    @dataset.markers.each {|m| m.should_receive(:to_s).with(5) }
+    @dataset.marker_string 5
+  end
+
+  it 'returns nil if there are no markers' do
+    Dataset.new(:data => [0]).marker_string(0).should be_nil
+  end
+
+  it 'collects the markers' do
+    @dataset.markers.should_receive(:collect)
+    @dataset.marker_string 0
+  end
+end
