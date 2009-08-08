@@ -4,6 +4,7 @@ class LineChart < Chart
   include CommonParams::ChartColors
   include CommonParams::ChartLegend
   include CommonParams::ChartTitle
+  include CommonParams::ChartMarkers
 
   def initialize options = {}
     self.type = options.delete(:type) || :line_chart
@@ -15,4 +16,3 @@ class LineChart < Chart
     @type = LINE_CHART_TYPES[type]
   end
 end
-

@@ -20,13 +20,18 @@ module CommonParams
     end
   end
 
-  module ChartShapeMarkers
+  module ChartMarkers
     def self.included base
-      base.parameters += [:shapes]
+      base.parameters += [:markers]
     end
 
-    def shapes
-      
+    def set_marker_indicies
+      @datasets.each_with_index { |d, i| d.markers.collect { |m| m.index = i } }
+    end
+
+    def markers
+      set_marker_indicies
+      param_string :marker_string, 'chm', '|'
     end
   end
 

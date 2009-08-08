@@ -20,8 +20,8 @@ class ChartMarker
     @point ||= -1
   end
 
-  def to_s index
-    self.index = index
+  def to_s index = nil
+    self.index = index unless index.blank?
     PARAMETERS.collect { |p| self.send(p) }.compact.join ','
   end
 
