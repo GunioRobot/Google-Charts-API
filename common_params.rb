@@ -25,12 +25,17 @@ module CommonParams
       base.parameters += [:markers]
     end
 
-    def set_marker_indicies
-      @datasets.each_with_index { |d, i| d.markers.collect { |m| m.index = i } }
+    def update_markers
+      @datasets.each_with_index do |d, i|
+        d.markers.collect do |m|
+          m.index = i
+          m.color ||= d.color unless d.color.blank?
+        end
+      end
     end
 
     def markers
-      set_marker_indicies
+      update_markers
       param_string :marker_string, 'chm', '|'
     end
   end
