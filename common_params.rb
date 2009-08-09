@@ -10,6 +10,21 @@ module CommonParams
     end
   end
 
+  module ChartDataScaling
+    def self.included base
+      base.send :attr_accessor, :use_scaling
+      base.parameters += [:scaling]
+    end
+
+    def use_scaling?
+      !!@use_scaling
+    end
+
+    def scaling
+      param_string :scaling, 'chds' if use_scaling?
+    end
+  end
+
   module ChartLegend
     def self.included base
       base.parameters += [:legend]
