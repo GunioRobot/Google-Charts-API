@@ -102,5 +102,4 @@ describe LineChart, '#build' do
     end
     lc.axes.first.should == Axis.new(:bottom, :range => {:start => 5, :end => 25})
   end
-
 end
