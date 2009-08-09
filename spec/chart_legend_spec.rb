@@ -14,7 +14,7 @@ describe CommonParams::ChartLegend do
 end
 
 describe CommonParams::ChartLegend, '#colors' do
-  it 'defines a reader for colors to the base class' do
+  it 'defines a reader for legend to the base class' do
     TestChart.new.respond_to?(:legend).should be_false
     TestChartWithLegend.new.respond_to?(:legend).should be_true
   end

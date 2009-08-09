@@ -10,6 +10,21 @@ module CommonParams
     end
   end
 
+  module ChartDataScaling
+    def self.included base
+      base.send :attr_accessor, :use_scaling
+      base.parameters += [:scaling]
+    end
+
+    def use_scaling?
+      !!@use_scaling
+    end
+
+    def scaling
+      param_string :scaling, 'chds' if use_scaling?
+    end
+  end
+
   module ChartLegend
     def self.included base
       base.parameters += [:legend]
@@ -17,6 +32,26 @@ module CommonParams
 
     def legend
       param_string :name, 'chdl', '|'
+    end
+  end
+
+  module ChartMarkers
+    def self.included base
+      base.parameters += [:markers]
+    end
+
+    def update_markers
+      @datasets.each_with_index do |d, i|
+        d.markers.collect do |m|
+          m.index = i
+          m.color ||= d.color unless d.color.blank?
+        end
+      end
+    end
+
+    def markers
+      update_markers
+      param_string :marker_string, 'chm', '|'
     end
   end
 
