@@ -11,9 +11,48 @@ Line Charts
 
 Are what I need, so that's getting implemented first.
 
-`lc = LineChart.new :title => 'Foo', :size => '600x300'
-lc.datasets << Dataset.new(:data => [1,2,3,4,5])
-lc.url # => http://chart.apis.google.com/chart?chd=s:BCDEF&chs=600x300&chtt=Foo&cht=lc`
+Create a line chart:
+
+    lc = LineChart.new :title => 'Foo', :size => '100x100'
+    lc.datasets << Dataset.new(:data => [5, 25, 50])
+    lc.url # => http://chart.apis.google.com/chart?chd=s:FZy&chs=100x100&cht=lc&chtt=Foo
+
+
+Or, use a Builder:
+
+    lc = LineChart.build 'Foo' do
+      size '100x100'
+      data Dataset.new(:data => [5, 25, 50])
+    end
+    lc.url # => http://chart.apis.google.com/chart?chd=s:FZy&chs=100x100&cht=lc&chtt=Foo
+
+![Example Chart](http://chart.apis.google.com/chart?chd=s:FZy&chs=100x100&cht=lc&chtt=Foo "Simple Line Chart")
+
+Add data markers:
+
+    d = Dataset.build 'Example with markers' do
+      data [5, 25, 50]
+      color :red
+      marker ChartMarker.new(:size => 8)
+    end
+
+    lc = LineChart.build 'Foo' do
+      size '300x200'
+      data d
+    end
+![Example Chart](http://chart.apis.google.com/chart?chd=s:FZy&chs=300x200&cht=lc&chco=FF0000&chm=o,FF0000,0,-1,8&chdl=Example%20with%20markers&chtt=Foo "Example with Markers")
+
+Bar Charts
+----------
+
+Are similar enough to line charts that I've added some rudimentary support. This is **NOT** tested!
+
+    bc = BarChart.new :title => 'Foo', :size => '100x100'
+    bc.datasets << Dataset.new(:data => [5, 25, 50])
+
+![Example Chart](http://chart.apis.google.com/chart?chd=s:FZy&chs=100x100&cht=bvg&chtt=Foo "Example Bar Chart")
+
+There is no Bar Chart Builder (yet)
 
 Spiffiness
 ----------
@@ -21,4 +60,3 @@ Spiffiness
 * Data encoding is handled automagically
 * Multiple data sets are already supported
 * Planning on (eventually) implementing the entire Charts API
-
