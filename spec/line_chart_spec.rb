@@ -51,3 +51,34 @@ describe '#url' do
     end
   end
 end
+
+describe '#build' do
+  it 'returns a new dataset' do
+    lc = LineChart.build {}
+    lc.is_a?(LineChart).should be_true
+  end
+
+  it 'sets the chart title' do
+    lc = LineChart.build 'title' do
+    end
+    lc.title.should == 'chtt=title'
+  end
+
+  it 'sets the chart size' do
+    lc = LineChart.build do
+      size '300x300'
+    end
+    lc.size.should == 'chs=300x300'
+  end
+
+  it 'adds datasets to the chart' do
+    d = Dataset.build 'first' do 
+      data [10,20,30,40,50]
+      color :black
+    end
+    lc = LineChart.build do
+      data d
+    end
+    lc.datasets.should include(d)
+  end
+end

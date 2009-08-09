@@ -34,8 +34,7 @@ class Chart
   end
 
   def type
-    raise 'Override this method in your child class!' if @type.blank?
-    "cht=#{@type}"
+    @type.blank? ? raise('Set @type in your child class!') : "cht=#{@type}"
   end
 
   def gather sym, separator = ','

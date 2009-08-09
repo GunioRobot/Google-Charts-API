@@ -6,7 +6,7 @@ describe Chart do
   end
 
   it 'defines PARAMETERS' do
-    Chart::PARAMETERS.should include (:encoded_data, :size, :type)
+    Chart::PARAMETERS.should include(:encoded_data, :size, :type)
   end
 
   it 'responds to type' do
@@ -38,7 +38,7 @@ describe '#datasets' do
     data  = Dataset.new :data => [1,2,3]
     chart.datasets << data
 
-    chart.datasets.should include data
+    chart.datasets.should include(data)
   end
 end
 
@@ -65,7 +65,7 @@ describe '#values' do
     chart.datasets << Dataset.new(:data => [1,2,3, 50])
     chart.datasets << Dataset.new(:data => [40,50,60])
 
-    [1,2,3,40,50,60].each { |n| chart.send(:values).should include n }
+    [1,2,3,40,50,60].each { |n| chart.send(:values).should include(n) }
   end
 
   describe '#max' do
@@ -154,19 +154,19 @@ describe '#encoded_data' do
   it 'contains the proper prefix header for extended datasets' do
     chart = Chart.new
     chart.datasets << Dataset.new(:data => [100,200,300])
-    chart.send(:encoded_data).should include 'chd=e:'
+    chart.send(:encoded_data).should include('chd=e:')
   end
 
   it 'contains the proper prefix for simple datasets' do
     chart = Chart.new
     chart.datasets << Dataset.new(:data => [1,2,3])
-    chart.send(:encoded_data).should include 'chd=s:'
+    chart.send(:encoded_data).should include('chd=s:')
   end
 
   it 'contains the proper prefix for text datasets' do
     chart = Chart.new
     chart.datasets << Dataset.new(:data => [-1,-2,-3])
-    chart.send(:encoded_data).should include 'chd=t:'
+    chart.send(:encoded_data).should include('chd=t:')
   end
 
   describe 'Multiple datasets' do

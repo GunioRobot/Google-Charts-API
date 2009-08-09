@@ -70,3 +70,38 @@ describe '#marker_string' do
     @dataset.marker_string 0
   end
 end
+
+describe '#build' do
+  it 'returns a new dataset' do
+    d = Dataset.build {}
+    d.is_a?(Dataset).should be_true
+  end
+
+  it 'sets the dataset name if passed' do
+    d = Dataset.build 'name' do
+    end
+    d.name.should == 'name'
+  end
+
+  it 'adds data to the set' do
+    d = Dataset.build do
+      data [ 0, 1, 2, 3, 4, 5 ]
+    end
+    d.data.should == [ 0, 1, 2, 3, 4, 5 ]
+  end
+
+  it 'sets the dataset color' do
+    d = Dataset.build do
+      color :red
+    end
+    d.color.should == 'FF0000'
+  end
+
+  it 'adds markers to the dataset' do
+    m = ChartMarker.new(:type => :circle, :size => 12)
+    d = Dataset.build do
+      marker m
+    end
+    d.markers.should include(m)
+  end
+end
