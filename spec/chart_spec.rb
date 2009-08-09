@@ -18,7 +18,7 @@ describe Chart do
   end
 end
 
-describe 'size' do
+describe Chart, 'size' do
   it 'complains if the size is too big' do
     lambda { Chart.new(:size => '150x1500').size }.should raise_error
     lambda { Chart.new(:size => '1500x100').size }.should raise_error
@@ -32,7 +32,7 @@ describe 'size' do
   end
 end
 
-describe '#datasets' do
+describe Chart, '#datasets' do
   it 'is an array of datasets for this chart' do
     chart = Chart.new   :size => '600x300'
     data  = Dataset.new :data => [1,2,3]
@@ -42,7 +42,7 @@ describe '#datasets' do
   end
 end
 
-describe '#values' do
+describe Chart, '#values' do
   it 'collects all of the datasets data' do
     chart = Chart.new
     chart.datasets << Dataset.new(:data => [1,2,3])
@@ -89,7 +89,7 @@ describe '#values' do
   end
 end
 
-describe '#non_integer_data' do
+describe Chart, '#non_integer_data' do
   it 'returns true if all the values are not integers' do
     chart = Chart.new
     chart.datasets << Dataset.new(:data => [-1.0,2,3])
@@ -103,7 +103,7 @@ describe '#non_integer_data' do
   end
 end
 
-describe '#encoding' do
+describe Chart, '#encoding' do
   it 'chooses text encoding if the data contains negative numbers' do
     chart = Chart.new
     chart.datasets << Dataset.new(:data => [-1,2,3])
@@ -140,7 +140,7 @@ describe '#encoding' do
   end
 end
 
-describe '#encoded_data' do
+describe Chart, '#encoded_data' do
   it 'collects all of the datasets data' do
     chart = Chart.new
     chart.datasets << Dataset.new(:data => [1,2,3])
@@ -193,7 +193,7 @@ describe '#encoded_data' do
   end
 end
 
-describe '#gather' do
+describe Chart, '#gather' do
   before :all do
     @chart = Chart.new
     @chart.datasets << Dataset.new(:data => [15,20,35], :color => :black)

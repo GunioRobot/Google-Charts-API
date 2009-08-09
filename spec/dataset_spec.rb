@@ -7,7 +7,7 @@ describe Dataset do
   end
 end
 
-describe 'data' do
+describe Dataset, 'data' do
   it 'complains if data is nil' do
     lambda { Dataset.new.data }.should raise_error
   end
@@ -26,7 +26,7 @@ describe 'data' do
   end
 end
 
-describe '#encoded_data' do
+describe Dataset, '#encoded_data' do
   it 'defaults to text encoding' do
     Dataset.new(:data => [0, 1, 2]).encoded_data.should == '0,1,2'
   end
@@ -49,7 +49,7 @@ describe '#encoded_data' do
   end
 end
 
-describe '#marker_string' do
+describe Dataset, '#marker_string' do
   before :all do
     @dataset = Dataset.new(:data => [0])
     @dataset.markers << ChartMarker.new
@@ -71,7 +71,7 @@ describe '#marker_string' do
   end
 end
 
-describe '#build' do
+describe Dataset, '#build' do
   it 'returns a new dataset' do
     d = Dataset.build {}
     d.is_a?(Dataset).should be_true
