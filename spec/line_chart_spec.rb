@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe LineChart do
   it 'decends from Chart' do
-    LineChart.ancestors.should include Chart
+    LineChart.ancestors.should include(Chart)
   end
 end
 
@@ -38,7 +38,7 @@ describe '#url' do
   it 'includes the base url' do
     lc = LineChart.new :size => '600x300'
     lc.datasets << Dataset.new(:data => [10, 20, 30])
-    lc.url.should include Chart::BASE_URL
+    lc.url.should include(Chart::BASE_URL)
   end
 
   it 'appends each parameter to the url string, and seperates with &' do
@@ -47,7 +47,7 @@ describe '#url' do
 
     LineChart.parameters.each do |param|
       value = lc.send(param)
-      lc.url.should include value unless value.blank?
+      lc.url.should include(value) unless value.blank?
     end
   end
 end
