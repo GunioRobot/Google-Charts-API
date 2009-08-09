@@ -7,25 +7,19 @@ describe Dataset do
   end
 end
 
-describe 'data=' do
+describe 'data' do
   it 'complains if data is nil' do
-    lambda { Dataset.new }.should raise_error
+    lambda { Dataset.new.data }.should raise_error
   end
 
   it 'complains if data is 0 length' do
-    lambda { Dataset.new :data => '' }.should raise_error
+    lambda { Dataset.new(:data => '').data }.should raise_error
   end
 
   it 'complains if data is not an array' do
-    lambda { Dataset.new :data => 'foo' }.should raise_error
+    lambda { Dataset.new(:data => 'foo').data }.should raise_error
   end
 
-  it 'accepts an array of data' do
-    lambda { Dataset.new :data => [1,2,3] }.should_not raise_error
-  end
-end
-
-describe 'data' do
   it 'outputs unencoded data' do
     d = Dataset.new :data => [0, 1, 2]
     d.data.should == [0, 1, 2]
