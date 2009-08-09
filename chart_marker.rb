@@ -10,9 +10,9 @@ class ChartMarker
 
   PARAMETERS = [:type, :color, :index, :point, :size, :priority]
 
-  attr_accessor :priority
+  attr_accessor :index, :priority
   attr_reader   :type
-  attr_writer   :color, :index, :size
+  attr_writer   :color, :size
 
   def initialize options = {}
     self.type = options.delete(:type) || :circle
@@ -22,6 +22,7 @@ class ChartMarker
 
   def to_s index = nil
     self.index = index unless index.blank?
+    check_values
     PARAMETERS.collect { |p| self.send(p) }.compact.join ','
   end
 
@@ -30,11 +31,11 @@ class ChartMarker
   end
 
   def color
-    @color.blank? ? raise('Color must be specified') : @color.to_hex_color
+    @color.to_hex_color if @color
   end
 
   def index
-    @index.blank? ? raise('Index must be specified') : @index
+    @index
   end
 
   def point= point
@@ -49,4 +50,14 @@ class ChartMarker
   def size
     @size.blank? ? raise('Size must be specified') : @size
   end
+
+private
+
+  def check_values
+    params = %w{ color index point size }
+    params.each do |p| 
+      raise "#{p} must be specified" if instance_variable_get("@#{p}").blank?
+    end
+  end
+
 end

@@ -35,18 +35,8 @@ describe ChartMarker, '#type' do
 end
 
 describe ChartMarker, '#color' do
-  it 'raises an error if color is not set' do
-    lambda { ChartMarker.new.color }.should raise_error
-  end
-
   it 'returns the proper hex color if set' do
     ChartMarker.new(:color => :red).color.should == 'FF0000'
-  end
-end
-
-describe ChartMarker, '#index' do
-  it 'raises an error if index is nil' do
-    lambda { Chart.new.index }.should raise_error
   end
 end
 
@@ -62,21 +52,41 @@ describe ChartMarker, '#point' do
   end
 end
 
-describe ChartMarker, '#size' do
-  it 'raises an error if size is nil' do
-    lambda { Chart.new.size }.should raise_error
-  end
-end
-
 describe ChartMarker, '#to_s' do
+  before :all do
+    @marker = ChartMarker.new :size => 12, :color => :red
+  end
   it 'takes a param that sets the index' do
-    m = ChartMarker.new :size => 12, :color => :red
-    m.to_s(12)
-    m.index.should == 12
+    @marker.to_s(12)
+    @marker.index.should == 12
+  end
+
+  it 'calls check_values' do
+    @marker.should_receive(:check_values)
+    @marker.to_s(12)
   end
 
   it 'gathers all parmeters and joins them with strings' do
-    m = ChartMarker.new :size => 12, :color => :red
-    m.to_s(0).should == "o,FF0000,0,-1,12"
+    @marker = ChartMarker.new :size => 12, :color => :red
+    @marker.to_s(0).should == "o,FF0000,0,-1,12"
+  end
+end
+
+
+describe ChartMarker, '#check_values' do
+  it 'raises an error if color is not set' do
+    m = ChartMarker.new
+    m.color = nil
+    lambda { m.send :check_values }.should raise_error('color must be specified')
+  end
+
+  it 'raises an error if index is nil' do
+    m = ChartMarker.new :color => :red
+    lambda { m.send :check_values }.should raise_error('index must be specified')
+  end
+
+  it 'raises an error if size is nil' do
+    m = ChartMarker.new :color => :red, :index => 0
+    lambda { m.send :check_values }.should raise_error('size must be specified')
   end
 end
