@@ -81,4 +81,11 @@ describe LineChart, '#build' do
     end
     lc.datasets.should include(d)
   end
+
+  it 'adds axes to the chart' do
+    lc = LineChart.build do
+      axes :bottom, %w{ one two three}
+    end
+    lc.axes.size.should == 1
+  end
 end

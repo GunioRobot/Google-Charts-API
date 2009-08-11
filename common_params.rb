@@ -66,4 +66,25 @@ module CommonParams
     end
   end
 
+  module ChartAxisStyle
+    def self.included base
+      base.send :attr_accessor, :axes
+      base.parameters += [:axis_types, :axis_labels]
+    end
+
+    def initialize options = {}
+      @axes ||= []
+      super options
+    end
+
+    def axis_types
+      "chxt=#{ @axes.collect(&:type).join(',')}" unless @axes.blank?
+    end
+
+    def axis_labels
+      strings = []
+      @axes.each_with_index { |axis, index| strings << axis.to_s(index) }
+      "chxl=#{strings.join('|')}"
+    end
+  end
 end

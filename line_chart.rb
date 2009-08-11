@@ -5,6 +5,7 @@ class LineChart < Chart
   include CommonParams::ChartLegend
   include CommonParams::ChartTitle
   include CommonParams::ChartMarkers
+  include CommonParams::ChartAxisStyle
 
   def initialize options = {}
     self.type = options.delete(:type) || :line_chart
@@ -28,6 +29,10 @@ class LineChartBuilder
 
   def initialize options = {}
     @chart = LineChart.new :title => options[:title]
+  end
+
+  def axes type, labels = nil
+    @chart.axes << Axis.new(type, labels)
   end
 
   def data dataset
