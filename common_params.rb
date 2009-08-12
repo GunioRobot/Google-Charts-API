@@ -70,6 +70,12 @@ module CommonParams
     def self.included base
       base.send :attr_accessor, :axes
       base.parameters += [:axis_types, :axis_labels, :axis_ranges]
+
+      begin
+        builder = "#{base}Builder".constantize
+        builder.send :include, Builder
+      rescue NameError # This class does not have a builder
+      end
     end
 
     def initialize options = {}
@@ -97,6 +103,12 @@ module CommonParams
       text = axes_info :range
       return nil if text.blank?
       "chxr=#{text}"
+    end
+
+    module Builder
+      def axes type, options = {}
+        @chart.axes << Axis.new(type, options)
+      end
     end
   end
 end
