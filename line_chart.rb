@@ -1,3 +1,5 @@
+require 'line_chart_builder'
+
 class LineChart < Chart
   LINE_CHART_TYPES = { :line_chart => 'lc', :sparkline  => 'ls', :scatter => 'lxy' }
 
@@ -21,32 +23,5 @@ class LineChart < Chart
   def type= type
     raise 'Invalid Chart Type' unless LINE_CHART_TYPES.include?(type)
     @type = LINE_CHART_TYPES[type]
-  end
-end
-
-class LineChartBuilder
-  attr_reader :chart
-
-  def initialize options = {}
-    @chart = LineChart.new :title => options[:title]
-  end
-
-  def axes type, options = {}
-    @chart.axes << Axis.new(type, options)
-  end
-
-  def dataset value, &block
-    if block_given?
-      dataset = Dataset.build value do
-        instance_eval(&block)
-      end
-    else
-      dataset = value
-    end
-    @chart.datasets << dataset
-  end
-
-  def size string
-    @chart.send :size=, string
   end
 end
