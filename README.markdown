@@ -17,37 +17,14 @@ Create a line chart:
     lc.datasets << Dataset.new(:data => [5, 25, 50])
     lc.url # => http://chart.apis.google.com/chart?chd=s:FZy&chs=100x100&cht=lc&chtt=Foo
 
+![Example Chart](http://chart.apis.google.com/chart?chd=s:FZy&chs=100x100&cht=lc&chtt=Foo "Simple Line Chart")
 
 Or, use a Builder:
 
-    lc = LineChart.build 'Foo' do
-      size '100x100'
-      data Dataset.new(:data => [5, 25, 50])
-    end
-    lc.url # => http://chart.apis.google.com/chart?chd=s:FZy&chs=100x100&cht=lc&chtt=Foo
-
-![Example Chart](http://chart.apis.google.com/chart?chd=s:FZy&chs=100x100&cht=lc&chtt=Foo "Simple Line Chart")
-
-Add data markers:
-
-    d = Dataset.build 'Example with markers' do
-      data [5, 25, 50]
-      color :red
-      marker ChartMarker.new(:size => 8)
-    end
-
-    lc = LineChart.build 'Foo' do
-      size '300x200'
-      data d
-    end
-![Example Chart](http://chart.apis.google.com/chart?chd=s:FZy&chs=300x200&cht=lc&chco=FF0000&chm=o,FF0000,0,-1,8&chdl=Example%20with%20markers&chtt=Foo "Example with Markers")
-
-Add axis labels:
-
     lc = LineChart.build 'Test' do
       size '350x250'
-      axes :bottom, %w{ one two three}
-      axes :left,   %w{ A B C}
+      axes :bottom, :range  => { :start => 1, :end => 3, :interval => 1 }
+      axes :left,   :labels => %w{ A B C}
 
       data (Dataset.build 'First' do
         data  [15,5,35]
@@ -56,7 +33,7 @@ Add axis labels:
       end)
     end
 
-![Example Chart](http://chart.apis.google.com/chart?chd=s:PFj&chs=350x250&cht=lc&chco=FF0000&chdl=First&chtt=Test&chm=o,FF0000,0,-1,12&chxt=x,y&chxl=0:|one|two|three|1:|A|B|C "Example with Axis Labels")
+![Example Chart](http://chart.apis.google.com/chart?chd=s:PFj&chs=350x250&cht=lc&chxt=x,y&chxl=1:|A|B|C&chxr=0,1,3,1&chco=FF0000&chdl=First&chm=o,FF0000,0,-1,12&chtt=Test "Example with Axis Labels")
 
 Bar Charts
 ----------
