@@ -76,10 +76,26 @@ describe LineChart, '#build' do
       data [10,20,30,40,50]
       color :black
     end
+
     lc = LineChart.build do
-      data d
+      dataset d
     end
     lc.datasets.should include(d)
+  end
+
+  it 'builds datasets in place' do
+    lc = LineChart.build do
+      dataset 'first' do 
+        data [10,20,30,40,50]
+        color :black
+      end
+    end
+
+    lc.datasets.size.should == 1
+    d = lc.datasets.first
+    d.is_a?(Dataset).should be_true
+    d.data.should == [10,20,30,40,50]
+    d.name.should == 'first'
   end
 
   it 'adds axes to the chart' do

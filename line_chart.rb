@@ -35,7 +35,14 @@ class LineChartBuilder
     @chart.axes << Axis.new(type, options)
   end
 
-  def data dataset
+  def dataset value, &block
+    if block_given?
+      dataset = Dataset.build value do
+        instance_eval(&block)
+      end
+    else
+      dataset = value
+    end
     @chart.datasets << dataset
   end
 
