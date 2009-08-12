@@ -6,10 +6,6 @@ class Object
     'silver'   => 'C0C0C0', 'teal'     => '008080', 'white'    => 'FFFFFF', 'yellow'   => 'FFFF00'
   }
 
-  def blank?
-    respond_to?(:empty?) ? empty? : !self
-  end unless Object.respond_to? :blank?
-
   def to_hex_color
     return self if self.is_a?(String) && (hex_color? || hex_color_with_opacity?)
     HTML_HEX_COLORS[self.to_s.downcase] || raise('Not a color!')
@@ -17,11 +13,6 @@ class Object
 
 end
 
-class Symbol
-  def to_proc
-    Proc.new { |*args| args.shift.__send__(self, *args) }
-  end
-end
 
 class Integer
   CHARACTERS = [

@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'active_support'
 require 'extensions'
 require 'axis'
 require 'chart'
