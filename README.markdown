@@ -26,11 +26,11 @@ Or, use a Builder:
       axes :bottom, :range  => { :start => 1, :end => 3, :interval => 1 }
       axes :left,   :labels => %w{ A B C}
 
-      data (Dataset.build 'First' do
+      dataset 'First' do
         data  [15,5,35]
         color :red
         marker ChartMarker.new(:type => :circle, :size => 12)
-      end)
+      end
     end
 
 ![Example Chart](http://chart.apis.google.com/chart?chd=s:PFj&chs=350x250&cht=lc&chxt=x,y&chxl=1:|A|B|C&chxr=0,1,3,1&chco=FF0000&chdl=First&chm=o,FF0000,0,-1,12&chtt=Test "Example with Axis Labels")
