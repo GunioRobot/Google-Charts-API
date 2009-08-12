@@ -1,11 +1,11 @@
 class LineChart < Chart
   LINE_CHART_TYPES = { :line_chart => 'lc', :sparkline  => 'ls', :scatter => 'lxy' }
 
+  include CommonParams::ChartAxes
   include CommonParams::ChartColors
   include CommonParams::ChartLegend
-  include CommonParams::ChartTitle
   include CommonParams::ChartMarkers
-  include CommonParams::ChartAxisStyle
+  include CommonParams::ChartTitle
 
   def initialize options = {}
     self.type = options.delete(:type) || :line_chart
@@ -31,8 +31,8 @@ class LineChartBuilder
     @chart = LineChart.new :title => options[:title]
   end
 
-  def axes type, labels = nil
-    @chart.axes << Axis.new(type, labels)
+  def axes type, options = {}
+    @chart.axes << Axis.new(type, options)
   end
 
   def data dataset

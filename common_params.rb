@@ -66,10 +66,10 @@ module CommonParams
     end
   end
 
-  module ChartAxisStyle
+  module ChartAxes
     def self.included base
       base.send :attr_accessor, :axes
-      base.parameters += [:axis_types, :axis_labels]
+      base.parameters += [:axis_types, :axis_labels, :axis_ranges]
     end
 
     def initialize options = {}
@@ -81,10 +81,22 @@ module CommonParams
       "chxt=#{ @axes.collect(&:type).join(',')}" unless @axes.blank?
     end
 
-    def axis_labels
+    def axes_info m
       strings = []
-      @axes.each_with_index { |axis, index| strings << axis.to_s(index) }
-      "chxl=#{strings.join('|')}"
+      @axes.each_with_index { |axis, index| strings << axis.send(m, index) }
+      strings.compact.join('|')
+    end
+
+    def axis_labels
+      text = axes_info :labels
+      return nil if text.blank?
+      "chxl=#{text}"
+    end
+
+    def axis_ranges
+      text = axes_info :range
+      return nil if text.blank?
+      "chxr=#{text}"
     end
   end
 end

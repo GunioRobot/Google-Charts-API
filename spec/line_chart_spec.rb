@@ -84,8 +84,23 @@ describe LineChart, '#build' do
 
   it 'adds axes to the chart' do
     lc = LineChart.build do
-      axes :bottom, %w{ one two three}
+      axes :bottom
     end
-    lc.axes.size.should == 1
+    lc.axes.first.should == Axis.new(:bottom)
   end
+
+  it 'adds axes with labels to the chart' do
+    lc = LineChart.build do
+      axes :bottom, :labels => %w{ one two three}
+    end
+    lc.axes.first.should == Axis.new(:bottom, :labels => %w{ one two three})
+  end
+
+  it 'adds axes with ranges to the chart' do
+    lc = LineChart.build do
+      axes :bottom, :range => {:start => 5, :end => 25}
+    end
+    lc.axes.first.should == Axis.new(:bottom, :range => {:start => 5, :end => 25})
+  end
+
 end
