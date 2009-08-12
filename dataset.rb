@@ -1,3 +1,5 @@
+require 'dataset_builder'
+
 class Dataset
   attr_accessor :markers, :name
   attr_writer   :color,   :data
@@ -33,25 +35,4 @@ class Dataset
     result = @markers.collect { |m| m.to_s index }
     result.blank? ? nil : result.join('|')
   end
-end
-
-class DatasetBuilder
-  attr_reader :dataset
-
-  def initialize options = {}
-    @dataset = Dataset.new :name => options[:name]
-  end
-
-  def color value
-    @dataset.color = value
-  end
-
-  def data array
-    @dataset.data = array
-  end
-
-  def marker marker
-    @dataset.markers << marker
-  end
-
 end
